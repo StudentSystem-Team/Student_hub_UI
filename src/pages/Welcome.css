@@ -1,0 +1,125 @@
+
+.welcome-page {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: Inter, Arial, sans-serif;
+  overflow: hidden;
+}
+
+.welcome-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 25, 55, 0.72),
+    rgba(8, 25, 55, 0.25)
+  );
+}
+
+.welcome-header {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  z-index: 2;
+  display: flex;
+  gap: 12px;
+}
+
+.welcome-login,
+.welcome-register,
+.welcome-button {
+  display: inline-block;
+  padding: 13px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 30px;
+  background: #1769ff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.welcome-register {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+.welcome-login:hover,
+.welcome-register:hover,
+.welcome-button:hover {
+  background: #084dcc;
+  transform: translateY(-2px);
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1100px;
+  padding: 24px;
+  text-align: center;
+  color: white;
+}
+
+.welcome-icon {
+  margin-bottom: 12px;
+  font-size: 55px;
+}
+
+.welcome-eyebrow {
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: white;
+}
+
+.welcome-content h1 {
+  margin: 0 0 20px;
+  color: white;
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 1.2;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
+}
+
+.welcome-content p:not(.welcome-eyebrow) {
+  margin-bottom: 30px;
+  color: white;
+  font-size: clamp(16px, 2vw, 22px);
+  line-height: 1.6;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.welcome-button {
+  padding: 16px 32px;
+  border: none;
+  font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  .welcome-header {
+    top: 18px;
+    right: 18px;
+    gap: 8px;
+  }
+
+  .welcome-login,
+  .welcome-register {
+    padding: 11px 16px;
+  }
+
+  .welcome-content h1 {
+    font-size: 34px;
+  }
+
+  .welcome-eyebrow {
+    letter-spacing: 2px;
+  }
+}

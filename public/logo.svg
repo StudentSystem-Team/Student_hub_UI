@@ -1,0 +1,19 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 72" role="img" aria-labelledby="logoTitle">
+  <title id="logoTitle">Student Management System</title>
+  <defs>
+    <linearGradient id="cap" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1749a5"/>
+      <stop offset="100%" stop-color="#08265f"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(3 7)">
+    <path d="M1 21 31 5 61 21 31 37Z" fill="url(#cap)"/>
+    <path d="M12 29v13c11 10 27 10 38 0V29L31 40Z" fill="#123c87"/>
+    <path d="M57 23v20" fill="none" stroke="#dca83b" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="57" cy="46" r="3" fill="#dca83b"/>
+    <path d="M23 49h16" stroke="#dca83b" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <text x="77" y="34" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#102b61">Student Management</text>
+  <text x="77" y="58" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#102b61">System</text>
+</svg>

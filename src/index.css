@@ -1,16 +1,15 @@
-
-/* Global styles for Student Management System */
+/* =========================================
+   GLOBAL STYLES
+   ========================================= */
 
 :root {
-  font-family: "Segoe UI", Arial, sans-serif;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  color: #172554;
+  background: #eef2ff;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  color: #172554;
-  background: #eef4ff;
-  color-scheme: light;
 }
 
 * {
@@ -20,12 +19,21 @@
 html {
   min-width: 320px;
   min-height: 100%;
+  margin: 0;
+  scroll-behavior: auto;
 }
 
 body {
-  margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(
+    135deg,
+    #dbeafe 0%,
+    #ede9fe 50%,
+    #cffafe 100%
+  );
+  overflow-x: hidden;
 }
 
 #root {
@@ -34,12 +42,32 @@ body {
   margin: 0;
 }
 
-/* Consistent form styling */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #172554;
+  line-height: 1.3;
+}
+
+p {
+  line-height: 1.6;
+}
+
+a {
+  color: #2563eb;
+}
+
+img {
+  max-width: 100%;
+}
 
 button,
 input,
-select,
-textarea {
+textarea,
+select {
   font: inherit;
 }
 
@@ -47,44 +75,29 @@ button {
   cursor: pointer;
 }
 
-input,
-select,
-textarea {
-  max-width: 100%;
+button:disabled {
+  cursor: not-allowed;
 }
 
-img {
-  display: block;
-  max-width: 100%;
+::selection {
+  background: #bfdbfe;
+  color: #172554;
 }
 
-/* Responsive headings */
-
-h1,
-h2,
-h3,
-h4,
-p {
-  overflow-wrap: anywhere;
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  margin-top: 0;
+::-webkit-scrollbar-track {
+  background: #eef2ff;
 }
 
-p {
-  line-height: 1.6;
+::-webkit-scrollbar-thumb {
+  background: #a5b4fc;
+  border-radius: 10px;
 }
 
-/* Accessible keyboard focus */
-
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 3px solid rgba(59, 130, 246, 0.55);
-  outline-offset: 2px;
+::-webkit-scrollbar-thumb:hover {
+  background: #818cf8;
 }

@@ -1,133 +1,281 @@
 
 import { useState } from "react";
-import "./App.css";
+import { Link, useNavigate } from "react-router-dom";
+import { apiRequest } from "./services/api";
 
-const API_URL = "http://127.0.0.1:8000";
+export default function Register() {
+  const navigate = useNavigate();
 
-function Register({ onLogin }) {
+  const [role, setRole] = useState("student");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event) => {
+  async function handleRegister(event) {
     event.preventDefault();
-    setError("");
-    setSuccess("");
+    setMessage("");
+
+    if (!name.trim() || !email.trim()) {
+      setMessage("Please fill in all fields.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setMessage("Password must contain at least 8 characters.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          password,
-        }),
+      const normalizedEmail = email.trim().toLowerCase();
+
+      await apiRequest("/auth/register", "POST", {
+        username: normalizedEmail,
+        password,
+        role,
       });
 
-      const text = await response.text();
-      let data = {};
-
-      if (text) {
-        try {
-          data = JSON.parse(text);
-        } catch {
-          data = { detail: text };
-        }
-      }
-
-      if (!response.ok) {
-        throw new Error(
-          Array.isArray(data.detail)
-            ? data.detail.map((item) => item.msg).join(", ")
-            : data.detail || "Registration failed"
-        );
-      }
-
-      setSuccess("Account created successfully! You can now log in.");
-      setName("");
-      setEmail("");
-      setPassword("");
-    } catch (err) {
-      setError(err.message);
+      navigate("/login", {
+        replace: true,
+        state: {
+          message: "Registration successful. Please log in.",
+          email: normalizedEmail,
+          role,
+        },
+      });
+    } catch (error) {
+      setMessage(error.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
-    <div className="auth-page register-background">
-      <div className="register-message">
-        <h2>Build Your Future</h2>
-        <p>
-          Join our student community and manage your academic journey easily.
-        </p>
-      </div>
-
-      <section className="auth-card">
-        <div className="auth-icon">＋</div>
-        <h1>Create Account</h1>
-        <p className="auth-subtitle">
-          Register to manage student records
+    <div style={pageStyle}>
+      <div style={cardStyle}>
+        <h1 style={headingStyle}>Create Account</h1>
+        <p style={subtitleStyle}>Student Management System</p>
+        <p style={descriptionStyle}>
+          Register your student or teacher account
         </p>
 
-        {error && <div className="alert error">{error}</div>}
-        {success && <div className="alert success">{success}</div>}
+        <form onSubmit={handleRegister}>
+          <label htmlFor="register-role" style={labelStyle}>
+            Register As
+          </label>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
-          <label htmlFor="register-name">Full Name</label>
+          <select
+            id="register-role"
+            value={role}
+            onChange={(event) => setRole(event.target.value)}
+            style={inputStyle}
+            required
+          >
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+
+          <label htmlFor="register-name" style={labelStyle}>
+            Full Name
+          </label>
+
           <input
             id="register-name"
             type="text"
-            placeholder="Enter your full name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(event) => setName(event.target.value)}
+            placeholder="Enter your full name"
+            maxLength={100}
+            style={inputStyle}
             required
           />
 
-          <label htmlFor="register-email">Email Address</label>
+          <label htmlFor="register-email" style={labelStyle}>
+            Email Address
+          </label>
+
           <input
             id="register-email"
             type="email"
-            placeholder="Enter your email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="Enter your email"
+            maxLength={255}
+            style={inputStyle}
             required
           />
 
-          <label htmlFor="register-password">Password</label>
+          <label htmlFor="register-password" style={labelStyle}>
+            Password
+          </label>
+
           <input
             id="register-password"
             type="password"
-            placeholder="Create a password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="Create a password"
             minLength={8}
+            autoComplete="new-password"
+            style={inputStyle}
             required
           />
 
+          <label htmlFor="register-confirm-password" style={labelStyle}>
+            Confirm Password
+          </label>
+
+          <input
+            id="register-confirm-password"
+            type="password"
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            placeholder="Re-enter your password"
+            minLength={8}
+            autoComplete="new-password"
+            style={inputStyle}
+            required
+          />
+
+          {message && (
+            <p role="alert" style={messageStyle}>
+              {message}
+            </p>
+          )}
+
           <button
-            className="primary-button"
             type="submit"
             disabled={loading}
+            style={{
+              ...buttonStyle,
+              opacity: loading ? 0.6 : 1,
+            }}
           >
-            {loading ? "Creating account..." : "Register →"}
+            {loading
+              ? "Please wait..."
+              : `Register as ${role === "student" ? "Student" : "Teacher"}`}
           </button>
         </form>
 
-        <p className="auth-switch">
+        <p style={footerStyle}>
           Already have an account?{" "}
-          <button type="button" onClick={onLogin}>
+          <Link to="/login" style={linkStyle}>
             Login
-          </button>
+          </Link>
         </p>
-      </section>
+      </div>
     </div>
   );
 }
 
-export default Register;
+const pageStyle = {
+  minHeight: "100vh",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundImage:
+    "url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f')",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  padding: 20,
+  boxSizing: "border-box",
+};
+
+const cardStyle = {
+  width: "100%",
+  maxWidth: 440,
+  background: "rgba(15,23,42,0.95)",
+  backdropFilter: "blur(20px)",
+  padding: 32,
+  borderRadius: 20,
+  boxShadow: "0 25px 60px rgba(0,0,0,0.6)",
+  border: "1px solid rgba(255,255,255,0.15)",
+  boxSizing: "border-box",
+};
+
+const headingStyle = {
+  fontSize: 26,
+  fontWeight: 800,
+  color: "white",
+  margin: "0 0 8px",
+  textAlign: "center",
+};
+
+const subtitleStyle = {
+  color: "white",
+  fontSize: 18,
+  fontWeight: 700,
+  textAlign: "center",
+  margin: "0 0 6px",
+};
+
+const descriptionStyle = {
+  color: "#94a3b8",
+  fontSize: 14,
+  textAlign: "center",
+  margin: "0 0 22px",
+};
+
+const labelStyle = {
+  fontSize: 14,
+  fontWeight: 600,
+  color: "white",
+  marginTop: 10,
+  display: "block",
+};
+
+const inputStyle = {
+  width: "100%",
+  padding: "12px 14px",
+  borderRadius: 10,
+  border: "1px solid #334155",
+  background: "#172033",
+  color: "white",
+  margin: "6px 0 10px",
+  display: "block",
+  outline: "none",
+  boxSizing: "border-box",
+};
+
+const buttonStyle = {
+  width: "100%",
+  marginTop: 20,
+  padding: 14,
+  background: "#2563eb",
+  border: "none",
+  borderRadius: 10,
+  color: "white",
+  fontWeight: 700,
+  fontSize: 15,
+  cursor: "pointer",
+};
+
+const messageStyle = {
+  color: "#fca5a5",
+  fontSize: 14,
+  marginTop: 12,
+  textAlign: "center",
+};
+
+const footerStyle = {
+  textAlign: "center",
+  marginTop: 20,
+  color: "white",
+  fontSize: 14,
+};
+
+const linkStyle = {
+  color: "#60a5fa",
+  fontWeight: 600,
+  textDecoration: "none",
+};

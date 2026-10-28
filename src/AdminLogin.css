@@ -1,0 +1,92 @@
+
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #e8efff, #f8faff);
+  font-family: Arial, sans-serif;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 35px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(20, 40, 90, 0.12);
+}
+
+.admin-login-icon {
+  font-size: 40px;
+  text-align: center;
+}
+
+.admin-login-eyebrow {
+  margin-top: 16px;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.admin-login-card h1 {
+  color: #172554;
+  font-size: 26px;
+  text-align: center;
+}
+
+.admin-login-description {
+  margin-bottom: 28px;
+  color: #64748b;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.admin-login-card .form-group {
+  margin-bottom: 20px;
+}
+
+.admin-login-card label {
+  display: block;
+  margin-bottom: 8px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.admin-login-card input {
+  width: 100%;
+  padding: 13px;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.admin-login-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #1d4ed8;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.admin-login-button:hover {
+  background: #1e40af;
+}
+
+.admin-login-back {
+  display: block;
+  margin-top: 22px;
+  color: #2563eb;
+  text-align: center;
+  text-decoration: none;
+}
